@@ -1,6 +1,26 @@
-module Simplex exposing (BackendProgram(..), migrateWithDowntime, new)
+module Simplex exposing
+    ( new
+    , migrateWithDowntime
+    , BackendProgram(..)
+    )
 
 {-| This module contains the main program types for a Simplex app.
+
+
+# Deploying a new app
+
+@docs new
+
+
+# Migrating an existing app
+
+@docs migrateWithDowntime
+
+
+# Types
+
+@docs BackendProgram
+
 -}
 
 import Basics exposing (Never)
