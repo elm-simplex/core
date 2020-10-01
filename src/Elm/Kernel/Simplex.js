@@ -9,7 +9,7 @@ var _Simplex_new = function(app)
 	while(true){};
 });
 
-var _Simplex_migrateWithDowntime = function(app)
+var _Simplex_zeroDowntimeMigration = function(app)
 {
 	while(true){};
 });
