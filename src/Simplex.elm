@@ -1,6 +1,6 @@
 module Simplex exposing
     ( new
-    , migrateWithDowntime
+    , zeroDowntimeMigration
     , BackendProgram(..)
     )
 
@@ -14,7 +14,7 @@ module Simplex exposing
 
 # Migrating an existing app
 
-@docs migrateWithDowntime
+@docs zeroDowntimeMigration
 
 
 # Types
@@ -25,9 +25,10 @@ module Simplex exposing
 
 import Basics exposing (Never)
 import Elm.Kernel.Simplex
-import Maybe exposing (Maybe)
 import Platform.Cmd exposing (Cmd)
 import Platform.Sub exposing (Sub)
+import Result exposing (Result)
+import String exposing (String)
 
 
 {-| Deploy a completely new app.
@@ -42,7 +43,7 @@ new =
     Elm.Kernel.Simplex.new
 
 
-{-| Migrate an existing app by:
+{-| Migrate an existing app without any downtime.
 
 1.  Stop processing incoming msgs
 2.  Migrate the model
@@ -53,17 +54,17 @@ This will naturally mean that the app is unresponsive to requests during the mig
 If migrate.model or migrate.msg return Nothing during the migration, it aborts the migration. If migrate.msg returns Nothing after the migration has succeeded, on a msg arriving late (e.g. from a long-running Task), that one msg will be dropped.
 
 -}
-migrateWithDowntime :
+zeroDowntimeMigration :
     { update : newMsg -> newModel -> ( newModel, Cmd newMsg )
     , subscriptions : newModel -> Sub newMsg
     , migrate :
-        { model : oldModel -> Maybe newModel
-        , msg : oldMsg -> Maybe newMsg
+        { model : oldModel -> Result String newModel
+        , msg : oldMsg -> Result String newMsg
         }
     }
     -> BackendProgram flags newModel newMsg ( oldMsg, oldModel )
-migrateWithDowntime =
-    Elm.Kernel.Simplex.migrateWithDowntime
+zeroDowntimeMigration =
+    Elm.Kernel.Simplex.zeroDowntimeMigration
 
 
 {-| -}
