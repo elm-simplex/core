@@ -203,9 +203,9 @@ Changing part of the Model from a `List User` to a `Dict UserId User`:
 
 ## Err returns from migration functions
 
-If migrate.model or migrate.msg returns Err during the migration, it aborts the migration, and the returned String will show up in the dashboard. This is a great way to know what specifically caused your migration to abort.
+If migrate.model or migrate.msg returns Err during the migration (when the MsgMigrationContext canMigrationStillBeAborted field is true), it aborts the migration, and the returned String will show up in the dashboard. This is a great way to know what specifically caused your migration to abort.
 
-If migrate.msg returns Err after the migration has succeeded, on a msg arriving late (e.g. from a long-running Task triggered before the migration succeeded), that one msg will just be silently dropped, so please use this feature carefully.
+If migrate.msg returns Err after the migration has succeeded (when the MsgMigrationContext canMigrationStillBeAborted field is false), on a msg arriving late (e.g. from a long-running Task triggered before the migration succeeded), that one msg will just be silently dropped, so please use this feature carefully.
 
 -}
 zeroDowntimeMigration :
