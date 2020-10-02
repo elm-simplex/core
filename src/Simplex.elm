@@ -85,7 +85,7 @@ In order to avoid downtime, we'll run both versions in parallel for a while and 
 
 Let's see this well-behaved migration in action, upgrading from version 4 to version 5.
 
-![well-behaved logical time migration example]()
+![well-behaved logical time migration example](https://raw.githubusercontent.com/elm-simplex/core/1.0.0/docs/migration-graph-logical.png)
 
 Now let's see a less nicely behaving migration in action, also upgrading from version 4 to version 5.
 
@@ -98,7 +98,7 @@ Now let's see a less nicely behaving migration in action, also upgrading from ve
         }
     ...
 
-![badly behaved logical time migration example]()
+![badly behaved logical time migration example](https://raw.githubusercontent.com/elm-simplex/core/1.0.0/docs/migration-graph-logical-bad-13.png)
 
 You might think, even though that migration function is crazy, this doesn't look that bad, and I would agree. However, we did tell the world that the counter value was 14, when it was in fact 1363 from the point of view of app version 5. Someone seeing this "wrong" http response could've made some decision based on it that they shouldn't have. Very low likelihood for most apps if you ask me, but if you're interacting with a payment api, it's worth keeping this in mind.
 
